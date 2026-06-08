@@ -19,13 +19,11 @@ if(BUILD_BANKING_TESTS)
         GIT_REPOSITORY https://github.com/google/googletest.git
         GIT_TAG v1.15.2
     )
-    
-    # Отключаем предупреждения и настраиваем gtest для использования /MT
     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
     FetchContent_MakeAvailable(googletest)
     
     file(GLOB TEST_SOURCES "tests/*.cpp")
     add_executable(banking_test ${TEST_SOURCES})
-    target_link_libraries(banking_test banking gtest_main)
+    target_link_libraries(banking_test banking gtest_main gmock)
     add_test(NAME banking_test COMMAND banking_test)
 endif()

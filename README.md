@@ -1153,4 +1153,4 @@ lab05/
 | Ресурс | Ссылка |
 |--------|--------|
 | **Репозиторий lab05** | https://github.com/qwepyhbvc/lab05 |
-| **GitHub Actions** | https://github.com/qwepyhbvc/lab05 |
+| **GitHub Actions** | https://github.com/qwepyhbvc/lab05/actions |

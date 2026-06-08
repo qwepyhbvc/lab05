@@ -1,4 +1,4 @@
-# Лабораторная работа V: Unit Testing с Google Test + Домашнее задание (Banking)
+# Лабораторная работа V: Unit Testing с Google Test
 
 ## Отчёт по выполнению
 

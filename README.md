@@ -1154,3 +1154,79 @@ lab05/
 |--------|--------|
 | **Репозиторий lab05** | https://github.com/qwepyhbvc/lab05 |
 | **GitHub Actions** | https://github.com/qwepyhbvc/lab05/actions |
+
+# Дополнение к отчёту по лабораторной работе V
+
+## Часть 6: Добавление mock-тестов (Домашнее задание)
+
+### 6.1. Требование ДЗ
+
+Согласно домашнему заданию, требовалось:
+- Использовать **mock-объекты** для тестирования
+- Покрытие кода 100%
+
+### 6.2. Реализация mock-тестов
+
+#### 6.2.1. Модификация класса Account (добавление виртуальных методов)
+
+Для поддержки mocking методы класса `Account` были объявлены как `virtual`:
+
+```cpp
+class Account {
+public:
+    virtual bool deposit(double amount);
+    virtual bool withdraw(double amount);
+    virtual double getBalance() const;
+    virtual std::string getIban() const;
+};
+```
+
+#### 6.2.2. Создание mock-класса
+
+```cpp
+// mock_account.h
+class MockAccount : public Account {
+public:
+    MockAccount(const std::string& iban, double balance = 0.0) 
+        : Account(iban, balance) {}
+    
+    MOCK_METHOD(bool, deposit, (double amount), (override));
+    MOCK_METHOD(bool, withdraw, (double amount), (override));
+    MOCK_METHOD(double, getBalance, (), (const, override));
+    MOCK_METHOD(std::string, getIban, (), (const, override));
+};
+```
+
+#### 6.2.3. Создание mock-тестов для Transaction
+
+```cpp
+// test_transaction_mock.cpp
+TEST_F(TransactionMockTest, ExecuteValidTransactionWithMock) {
+    EXPECT_CALL(*from, withdraw(200.0))
+        .Times(Exactly(1))
+        .WillOnce(Return(true));
+    
+    EXPECT_CALL(*to, deposit(200.0))
+        .Times(Exactly(1))
+        .WillOnce(Return(true));
+    
+    Transaction tx(from, to, 200.0);
+    EXPECT_TRUE(tx.execute());
+}
+```
+
+### 6.3. Результаты тестирования
+
+| Тип тестов | Количество | Статус |
+|------------|------------|--------|
+| Account (реальные объекты) | 10 | ✅ |
+| Transaction (реальные объекты) | 8 | ✅ |
+| Transaction (mock-объекты) | 5 | ✅ |
+| **Всего** | **23** | ✅ |
+
+### 6.4. Покрытие кода
+
+| Класс | Методы | Покрытие |
+|-------|--------|----------|
+| Account | 6 | 100% |
+| Transaction | 7 | 100% |
